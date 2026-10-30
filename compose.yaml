@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: stockManager-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        BACKEND_PORT: ${BACKEND_CONTAINER_PORT}
+    container_name: stockManager-backend
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: ${BACKEND_CONTAINER_PORT}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
+    restart: unless-stopped
+
+  #frontend:
+  #  build:
+  #    context: ./frontend
+  #    dockerfile: Dockerfile
+  #    args:
+  #      VITE_API_URL: ${VITE_API_URL}
+  #  container_name: stockManager-frontend
+  #  ports:
+  #    - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
+  #  depends_on:
+  #    - backend
+  #  restart: unless-stopped
+
+volumes:
+  postgres_data:
