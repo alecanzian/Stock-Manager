@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 import { Pool } from "pg";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const port = Number(process.env.PORT);
