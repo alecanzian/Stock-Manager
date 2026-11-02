@@ -25,7 +25,8 @@ services:
     container_name: stockManager-backend
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      PORT: ${BACKEND_CONTAINER_PORT}
+      BACKEND_PORT: ${BACKEND_CONTAINER_PORT}
+      FRONTEND_PORT: ${FRONTEND_HOST_PORT}
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -36,18 +37,18 @@ services:
       - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
     restart: unless-stopped
 
-  #frontend:
-  #  build:
-  #    context: ./frontend
-  #    dockerfile: Dockerfile
-  #    args:
-  #      VITE_API_URL: ${VITE_API_URL}
-  #  container_name: stockManager-frontend
-  #  ports:
-  #    - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
-  #  depends_on:
-  #    - backend
-  #  restart: unless-stopped
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: stockManager-frontend
+    environment:
+      API_URL: ${API_URL}
+    ports:
+      - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 volumes:
   postgres_data:

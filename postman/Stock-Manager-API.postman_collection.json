@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "3928b28f-18a4-4d78-a2fb-645b908150e7",
+		"name": "Stock-Manager-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44097211",
+		"_collection_link": "https://alessandrocanzian-3597200.postman.co/workspace/23862b21-4c4e-4514-a8e9-f4accd34bff2/collection/44097211-3928b28f-18a4-4d78-a2fb-645b908150e7?action=share&source=collection_link&creator=44097211"
+	},
+	"item": [
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/health",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "health/db",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "cookie",
+						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/health/db",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"health",
+						"db"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bd-init",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/bd-init",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"bd-init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bd-reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/bd-reset",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"bd-reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "items",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "cookie",
+						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/items",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/items/:id/subtract",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "cookie",
+						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/items/:id/subtract",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"items",
+						":id",
+						"subtract"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": ""
+		},
+		{
+			"key": "host",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

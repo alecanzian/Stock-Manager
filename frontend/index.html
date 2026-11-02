@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stock Manager</title>
+</head>
+<body>
+  <h1>Stock Manager</h1>
+
+  <button id="check">Check backend</button>
+  <pre id="output"></pre>
+
+  <h2>Items</h2>
+  <ul id="items"></ul>
+
+  <script src="/config.js"></script>
+  <script>
+    const output = document.getElementById('output');
+    const itemsList = document.getElementById('items');
+    const base = window.APP_CONFIG.API_URL;
+
+    document.getElementById('check').addEventListener('click', async () => {
+      try {
+        const health = await fetch(`${base}/health`).then(r => r.json());
+        const db = await fetch(`${base}/health/db`).then(r => r.json());
+        output.textContent = JSON.stringify({ health, db }, null, 2);
+      } catch (err) {
+        output.textContent = `Request failed: ${err}`;
+      }
+    });
+
+    async function changeQuantity(id, action) {
+        try {
+            const res = await fetch(`${base}/items/${id}/${action}`, { method: 'POST' });
+            const body = await res.json();
+            if (!res.ok) throw new Error(body.message || `HTTP ${res.status}`);
+            output.textContent = '';
+            await loadItems();
+        } catch (err) {
+            output.textContent = `Failed to ${action} item ${id}: ${err.message}`;
+        }
+    }
+
+    async function loadItems() {
+      try {
+        const items = await fetch(`${base}/items`).then(r => r.json());
+        itemsList.innerHTML = '';
+        for (const item of items) {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} (quantity: ${item.quantity}) `;
+
+          const addBtn = document.createElement('button');
+          addBtn.textContent = 'Add';
+          addBtn.addEventListener('click', () => changeQuantity(item.id, 'add'));
+
+          const subBtn = document.createElement('button');
+          subBtn.textContent = 'Subtract';
+          subBtn.addEventListener('click', () => changeQuantity(item.id, 'subtract'));
+
+          li.append(addBtn, ' ', subBtn);
+          itemsList.appendChild(li);
+        }
+      } catch (err) {
+        output.textContent = `Failed to load items: ${err}`;
+      }
+    }
+
+    loadItems();
+  </script>
+</body>
+</html>
