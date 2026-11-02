@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f4f5f7;
+  color: #222;
+  line-height: 1.4;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #1f2937;
+  color: #fff;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  align-items: start;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+/* Scanner */
+.scanner-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#webcam {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+}
+
+input {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #ccd0d6;
+  border-radius: 6px;
+  font: inherit;
+}
+
+input:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: #e5e7eb;
+  color: #111;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
+#add_button {
+  background: #16a34a;
+  color: #fff;
+}
+
+#remove_button {
+  background: #dc2626;
+  color: #fff;
+}
+
+#check {
+  background: #374151;
+  color: #fff;
+}
+
+/* Alerts: shown in red only when the text is not empty */
+.alert {
+  min-height: 1.2em;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+#form_alert:not(:empty) {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+/* Items list */
+#items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#items li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #eceef1;
+}
+
+#items li:last-child {
+  border-bottom: none;
+}
+
+#items li button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* Debug output */
+#output {
+  margin: 1.5rem 2rem;
+  padding: 1rem;
+  background: #111827;
+  color: #d1fae5;
+  border-radius: 8px;
+  min-height: 1rem;
+  white-space: pre-wrap;
+}
+
+#output:empty {
+  display: none;
+}
+
+/* Narrow screens: stack everything */
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  header {
+    padding: 1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#items li .item-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+#items li .item-qty {
+  min-width: 2.5rem;
+  text-align: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 600;
+  font-size: 0.9rem;
+}

@@ -29,7 +29,7 @@ app.get("/items", async (_req: Request, res: Response) => {
   console.log("Items endpoint called");
   try {
     const result = await pool.query(
-      "SELECT id, name, quantity FROM products ORDER BY id"
+      "SELECT id, name, quantity, barcode FROM products ORDER BY id"
     );
     res.json(result.rows);
   } catch (err) {
@@ -57,38 +57,79 @@ app.post("/bd-reset", async (_req: Request, res: Response) => {
   }
 });
 
-app.post("/items/:id/add", async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  console.log(`Add quantity for product ${id}`);
+app.post("/items/adjust", async (req: Request, res: Response) => {
+  const barcode = typeof req.body?.item === "string" ? req.body.item.trim() : "";
+  const delta = Number(req.body?.amount);
+  console.log(`Adjust quantity for barcode ${barcode} by ${delta}`);
+
+  if (!barcode) {
+    return res.status(400).json({ status: "error", message: "item (barcode) is required" });
+  }
+  if (!Number.isInteger(delta) || delta === 0) {
+    return res.status(400).json({ status: "error", message: "amount must be a non-zero integer" });
+  }
+
   try {
-    const result = await pool.query(
-      "UPDATE products SET quantity = quantity + 1 WHERE id = $1 RETURNING id, name, quantity",
-      [id]
-    );
-    if (result.rowCount === 0) {
-      return res.status(404).json({ status: "error", message: "product not found" });
-    }
-    res.json(result.rows[0]);
+    const { code, body } = await adjustStock(barcode, delta);
+    res.status(code).json(body);
   } catch (err) {
     res.status(500).json({ status: "error", message: String(err) });
   }
 });
 
-app.post("/items/:id/subtract", async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  console.log(`Subtract quantity for product ${id}`);
+// List buttons: +1 / -1 for the product with this barcode
+app.post("/items/:barcode/add", async (req: Request, res: Response) => {
+  const barcode = req.params.barcode;
+  console.log(`Add 1 for barcode ${barcode}`);
+  try {
+    const { code, body } = await adjustStock(barcode, 1);
+    res.status(code).json(body);
+  } catch (err) {
+    res.status(500).json({ status: "error", message: String(err) });
+  }
+});
+
+app.post("/items/:barcode/subtract", async (req: Request, res: Response) => {
+  const barcode = req.params.barcode;
+  console.log(`Subtract 1 for barcode ${barcode}`);
+  try {
+    const { code, body } = await adjustStock(barcode, -1);
+    res.status(code).json(body);
+  } catch (err) {
+    res.status(500).json({ status: "error", message: String(err) });
+  }
+});
+
+// Create a new product. Body: { barcode, name, quantity? }
+app.post("/items", async (req: Request, res: Response) => {
+  const barcode = typeof req.body?.barcode === "string" ? req.body.barcode.trim() : "";
+  const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+  const quantity = req.body?.quantity === undefined ? 0 : Number(req.body.quantity);
+  console.log(`Create product "${name}" with barcode ${barcode}, quantity ${quantity}`);
+
+  if (!barcode) {
+    return res.status(400).json({ status: "error", message: "barcode is required" });
+  }
+  if (!name) {
+    return res.status(400).json({ status: "error", message: "name is required" });
+  }
+  if (!Number.isInteger(quantity) || quantity < 0) {
+    return res.status(400).json({ status: "error", message: "quantity must be an integer >= 0" });
+  }
+
   try {
     const result = await pool.query(
-      `UPDATE products
-         SET quantity = quantity - 1
-       WHERE id = $1 AND quantity > 0
-       RETURNING id, name, quantity`,
-      [id]
+      `INSERT INTO products (name, quantity, barcode)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (barcode) DO NOTHING
+       RETURNING id, name, quantity, barcode`,
+      [name, quantity, barcode]
     );
+
     if (result.rowCount === 0) {
-      return res.status(409).json({ status: "error", message: "product not found or quantity is already 0" });
+      return res.status(409).json({ status: "error", message: "a product with that barcode already exists" });
     }
-    res.json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ status: "error", message: String(err) });
   }
@@ -103,7 +144,6 @@ app.listen(backend_port, "0.0.0.0", () => {
       process.exit(1);
     });
 });
-
 
 async function initDb() {
   const client = await pool.connect();
@@ -121,7 +161,7 @@ async function initDb() {
       INSERT INTO products (name, quantity, barcode) VALUES
         ('Apples', 5, '1000000000001'),
         ('Bananas', 12, '1000000000002'),
-        ('Oranges', 0, '1000000000003')
+        ('Acqua Panna', 1, '8000815565253')
       ON CONFLICT (barcode) DO NOTHING
     `);
     await client.query("COMMIT");
@@ -131,4 +171,24 @@ async function initDb() {
   } finally {
     client.release();
   }
+}
+
+// Shared stock logic. Returns the HTTP status and the JSON body to send.
+async function adjustStock(barcode: string, delta: number) {
+  const result = await pool.query(
+    `UPDATE products
+       SET quantity = quantity + $2
+     WHERE barcode = $1 AND quantity + $2 >= 0
+     RETURNING id, name, quantity, barcode`,
+    [barcode, delta]
+  );
+
+  if (result.rowCount === 0) {
+    const exists = await pool.query("SELECT 1 FROM products WHERE barcode = $1", [barcode]);
+    if (exists.rowCount === 0) {
+      return { code: 404, body: { status: "error", message: "no product with that barcode" } };
+    }
+    return { code: 409, body: { status: "error", message: "not enough stock to remove that amount" } };
+  }
+  return { code: 200, body: result.rows[0] };
 }
