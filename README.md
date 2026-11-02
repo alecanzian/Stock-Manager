@@ -91,4 +91,4 @@ curl -X POST http://localhost:3001/bd-reset
 
 A ready-made Postman collection with all the endpoints is in `postman/stock-manager.postman_collection.json`.
 
-To import it, open Postman, click **Import**, and select that file. Set the `base` variable to `http://localhost:3001`.
+To import it, open Postman, click **Import**, and select that file. Set the `port` variable to `3001`and `host` to `localhost`.

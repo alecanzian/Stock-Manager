@@ -550,6 +550,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -560,6 +561,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -569,18 +571,15 @@
 	"variable": [
 		{
 			"key": "port",
-			"value": "",
-			"type": "any"
+			"value": ""
 		},
 		{
 			"key": "host",
-			"value": "",
-			"type": "any"
+			"value": ""
 		},
 		{
 			"key": "baseUrl",
-			"value": "{{host}}:{{port}}",
-			"type": "any"
+			"value": "{{host}}:{{port}}"
 		}
 	]
 }
