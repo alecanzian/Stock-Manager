@@ -4,27 +4,63 @@
 		"name": "Stock-Manager-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44097211",
-		"_collection_link": "https://alessandrocanzian-3597200.postman.co/workspace/23862b21-4c4e-4514-a8e9-f4accd34bff2/collection/44097211-3928b28f-18a4-4d78-a2fb-645b908150e7?action=share&source=collection_link&creator=44097211"
+		"_collection_link": "https://alessandrocanzian-3597200.postman.co/workspace/MonetaFlow~23862b21-4c4e-4514-a8e9-f4accd34bff2/collection/44097211-3928b28f-18a4-4d78-a2fb-645b908150e7?action=share&source=collection_link&creator=44097211"
 	},
 	"item": [
 		{
 			"name": "health",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/health",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/health",
 					"host": [
-						"{{host}}"
+						"{{baseUrl}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"health"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Backend is running",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"ok\"\n}"
+				}
+			]
 		},
 		{
 			"name": "health/db",
@@ -34,62 +70,274 @@
 					{
 						"key": "cookie",
 						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
-						"type": "text",
 						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/health/db",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/health/db",
 					"host": [
-						"{{host}}"
+						"{{baseUrl}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"health",
 						"db"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Database is reachable",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/health/db",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health",
+								"db"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"ok\",\n  \"now\": \"2026-11-02T10:00:00.000Z\"\n}"
+				},
+				{
+					"name": "Database error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/health/db",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health",
+								"db"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"error\",\n  \"message\": \"error: connection refused\"\n}"
+				}
+			]
 		},
 		{
 			"name": "bd-init",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/bd-init",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/bd-init",
 					"host": [
-						"{{host}}"
+						"{{baseUrl}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"bd-init"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Schema ready and sample products inserted",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/bd-init",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bd-init"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"ok\",\n  \"message\": \"schema ready, sample products inserted\"\n}"
+				},
+				{
+					"name": "Initialization failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/bd-init",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bd-init"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"error\",\n  \"message\": \"error: connection refused\"\n}"
+				}
+			]
 		},
 		{
 			"name": "bd-reset",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/bd-reset",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/bd-reset",
 					"host": [
-						"{{host}}"
+						"{{baseUrl}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"bd-reset"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "products table dropped",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/bd-reset",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bd-reset"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"ok\",\n  \"message\": \"products table dropped\"\n}"
+				},
+				{
+					"name": "Reset failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/bd-reset",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bd-reset"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"error\",\n  \"message\": \"error: connection refused\"\n}"
+				}
+			]
 		},
 		{
 			"name": "items",
@@ -99,38 +347,189 @@
 					{
 						"key": "cookie",
 						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
-						"type": "text",
 						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/items",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/items",
 					"host": [
-						"{{host}}"
+						"{{baseUrl}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"items"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "List of products with their quantity",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Apples\",\n    \"quantity\": 5\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Bananas\",\n    \"quantity\": 12\n  }\n]"
+				},
+				{
+					"name": "Database error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"error\",\n  \"message\": \"error: relation \\\"products\\\" does not exist\"\n}"
+				}
+			]
 		},
 		{
-			"name": "/items/:id/subtract",
+			"name": "/items/:barcode/add",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "cookie",
 						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
-						"type": "text",
 						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"url": {
-					"raw": "http://{{host}}:{{port}}/items/:id/subtract",
+					"raw": "{{baseUrl}}/items/:barcode/add",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"items",
+						":barcode",
+						"add"
+					],
+					"variable": [
+						{
+							"key": "barcode",
+							"value": "1000000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/items/:barcode/subtract",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "cookie",
+						"value": "authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjIzNjI2MS1kYjZmLTQzZTgtODM3Yi1lYjQ4MDg5MDU2ZWYiLCJpYXQiOjE3ODQyNzg0ODQsImV4cCI6MTc4NDM2NDg4NH0.JJcf-MELG677_2FHS6BYhFBcsWQFuslEV-ZW7198CD0",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/items/:barcode/subtract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"items",
+						":barcode",
+						"subtract"
+					],
+					"variable": [
+						{
+							"key": "barcode",
+							"value": "1000000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/items/adjust",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"item\": \"1000000000001\", \"amount\": 3 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/items/adjust",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -138,14 +537,7 @@
 					"port": "{{port}}",
 					"path": [
 						"items",
-						":id",
-						"subtract"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"adjust"
 					]
 				}
 			},
@@ -158,7 +550,6 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
-				"requests": {},
 				"exec": [
 					""
 				]
@@ -169,7 +560,6 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
-				"requests": {},
 				"exec": [
 					""
 				]
@@ -179,12 +569,18 @@
 	"variable": [
 		{
 			"key": "port",
-			"value": ""
+			"value": "",
+			"type": "any"
 		},
 		{
 			"key": "host",
 			"value": "",
-			"type": "default"
+			"type": "any"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{host}}:{{port}}",
+			"type": "any"
 		}
 	]
 }
